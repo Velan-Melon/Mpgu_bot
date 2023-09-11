@@ -27,6 +27,10 @@ async def select_user(user_id):
     user = await User.query.where(User.user_id == user_id).gino.first()
     return user
 
+async def select_username(username):
+    user = await User.query.where(User.username == username).gino.first()
+    return user
+
 async def check_role():
     role = await User.role
     print(role)
@@ -72,7 +76,8 @@ async def update_student_speciality(user_id, speciality):
 
 async def add_abiturient(user_id: int):
     try:
-        user = Abitura(user_id=user_id)
+        abitur = await select_user(user_id)
+        user = Abitura(user_id=user_id, username=abitur.username)
         user2 = Student(user_id=user_id)
         await user2.delete()
         await user.create()

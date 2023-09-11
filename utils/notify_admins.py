@@ -1,7 +1,6 @@
 import logging
 
 from aiogram import Dispatcher
-from doc.anecdot import rand
 from data.config import ADMIN_ID
 from utils.db import admins_commands as commands
 

@@ -15,26 +15,26 @@ async def command_start(call: CallbackQuery):
                      f"Ответьте пожалуйста на вопрос, Вы студент, абитуриент или обычный пользователь?", reply_markup=ikb_begin)
 
 
-@rate_limit(limit=6)
-@dp.message_handler(IsNotActive(), text="/start")
-async def command_start(msg: types.Message):
-    try:
-        user = await commands.select_user(msg.chat.id)
-    except Exception:
-        await commands.add_user(user_id=msg.chat.id,
-                                first_name=msg.from_user.first_name,
-                                last_name=msg.from_user.last_name,
-                                username=msg.from_user.username,
-                                status="active")
-    await msg.answer(f"Здравствуйте, {msg.from_user.full_name}! \n"
-                     f"Ответьте пожалуйста на вопрос, Вы студент, абитуриент или обычный пользователь?", reply_markup=ikb_begin)
-
-@rate_limit(limit=6)
+@rate_limit(limit=3)
 @dp.message_handler(text="/start")
 async def command_start(msg: types.Message):
-    user = await commands.select_user(msg.from_user.id)
-    await msg.answer(f"Здравствуйте, {msg.from_user.full_name}! \n"
-                     f"Ваша нынешняя роль {user.role}\n"
-                     f"Желаете её изменить?\n"
-                     f"ПРИМЕЧАНИЕ: при подтверждении вся информация о Вас будет удалена", reply_markup=ikb_confirm)
+    try:
+        if await commands.select_user(msg.chat.id):
+            user = await commands.select_user(msg.from_user.id)
+            await msg.answer(f"Здравствуйте, {msg.from_user.full_name}! \n"
+                             f"Ваша нынешняя роль {user.role}\n"
+                             f"Желаете её изменить?\n"
+                             f"ПРИМЕЧАНИЕ: при подтверждении вся информация о Вас будет удалена",
+                             reply_markup=ikb_confirm)
+        else:
+            await commands.add_user(user_id=msg.chat.id,
+                                    first_name=msg.from_user.first_name,
+                                    last_name=msg.from_user.last_name,
+                                    username=msg.from_user.username,
+                                    status="active")
+            await msg.answer(f"Здравствуйте, {msg.from_user.full_name}! \n"
+                             f"Ответьте пожалуйста на вопрос, Вы студент, абитуриент или обычный пользователь?", reply_markup=ikb_begin)
+    except Exception:
+        await msg.answer(f"Произошла ошибка")
+        print(Exception)
 

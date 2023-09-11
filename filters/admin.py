@@ -7,7 +7,7 @@ from utils.db import admins_commands as commands
 class IsAdmin(BoundFilter):
     async def check(self, msg: types.Message):
         try:
-            admin = await commands.select_admin(msg.chat.id)
+            admin = await commands.select_admin_id(msg.chat.id)
             if isinstance(admin.user_id, int):
                 return True
         except Exception:

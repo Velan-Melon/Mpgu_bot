@@ -1,3 +1,6 @@
-from .add_dis import dp
-from .add_user import dp
+from .add_spo import dp
+from .add_admin import dp
+from .delete_admin import dp
+from .list_admins import dp
+from .add_vo_ofo import dp
 __all__ = ['dp']

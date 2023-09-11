@@ -58,14 +58,27 @@ async def state1(msg: types.Message, state: FSMContext):
         await register.reg_step_2.set()
     elif answer == "Среднее профессиональное образование (СПО)":
         await msg.answer(f"Укажите после какого класса Вы поступили", reply_markup=kb_form2)
-        await register.reg_step_2.set()
-    await register.reg_step_2.set()
+        await register.reg_step_3.set()
 
 
 @dp.message_handler(state=register.reg_step_2)
 async def state1(msg: types.Message, state: FSMContext):
     answer = msg.text
-    kb_curs = ReplyKeyboardMarkup(
+    kb_curs1 = ReplyKeyboardMarkup(
+        keyboard=[
+            [
+                KeyboardButton(text="1"),
+                KeyboardButton(text="2"),
+            ],
+            [
+                KeyboardButton(text="3"),
+                KeyboardButton(text="4"),
+            ],
+        ],
+        resize_keyboard=True,
+        one_time_keyboard=True
+    )
+    kb_curs2 = ReplyKeyboardMarkup(
         keyboard=[
             [
                 KeyboardButton(text="1"),
@@ -81,38 +94,104 @@ async def state1(msg: types.Message, state: FSMContext):
         one_time_keyboard=True
     )
     await command.update_student_form(msg.from_user.id, answer)
-    await msg.answer("Выберете Ваш курс", reply_markup=kb_curs)
-    await register.reg_step_3.set()
+    if answer == "Очная форма обучения (ОФО)":
+        await msg.answer(f"Выберете Ваш курс", reply_markup=kb_curs1)
+        await register.reg_step_5.set()
+    elif answer == "Очно-заочная форма обучения (ОЗФО)":
+        await msg.answer(f"Выберете Ваш курс", reply_markup=kb_curs2)
+        await register.reg_step_5.set()
 
 @dp.message_handler(state=register.reg_step_3)
 async def state1(msg: types.Message, state: FSMContext):
-    answer = int(msg.text)
-    await command.update_student_curs(msg.from_user.id, answer)
-    await msg.answer("Укажите Вашу специальность или направление подготовки, если затрудняетесь, то вот список")
-    await msg.answer("СПО:\n"
-                    "1. Преподавание в начальных классах\n"
-                    "2. Коррекционная педагогика в начальном образовании\n"
-                    "3. Дошкольное образование\n"
-                    "4. Экономика и бухгалтерский учёт (по отраслям)\n"
-                    "5. Право и организация социального обеспечения\n"
-                    "6. Информационные системы и программирование\n"
-                    "7. Информационные системы (по отраслям)\n"
-                    "8. Дизайн (по отраслям)\n"
-                    "ВО:\n"
-                    "1. Психолого-педагогическое образование (Психология и социальная педагогика)\n"
-                    "2. Психолого-педагогическое образование (Психология и педагогика дошкольного образования)\n"
-                    "3. Педагогическое образование (Начальное образование)\n"
-                    "4. Педпгогическое образование (Дошкольное образование и специальная педагогика)\n"
-                    "5. Юриспруденция (Общеправовой профиль)\n"
-                    "6. Государственное и муниципальное управление\n"
-                    "7. Менеджмент (Организация и управление бизнесом)\n"
-                    "8. Менеджмент (Экономика и управление предприятием)\n"
-                    "9. Менеджмент (Управление государственным и муниципальным сектором)\n"
-                    "10. Прикладная информатика (Прикладная информатика в экономике)\n"
-                    "11. Дизайн (Дизайн среды)")
+    answer = msg.text
+    kb_curs1 = ReplyKeyboardMarkup(
+        keyboard=[
+            [
+                KeyboardButton(text="1"),
+                KeyboardButton(text="2"),
+            ],
+            [
+                KeyboardButton(text="3"),
+                KeyboardButton(text="4"),
+            ],
+        ],
+        resize_keyboard=True,
+        one_time_keyboard=True
+    )
+    await command.update_student_form(msg.from_user.id, answer)
+    await msg.answer(f"Выберете Ваш курс", reply_markup=kb_curs1)
     await register.reg_step_4.set()
 
+
+
 @dp.message_handler(state=register.reg_step_4)
+async def state1(msg: types.Message, state: FSMContext):
+    answer = int(msg.text)
+    kb_list = ReplyKeyboardMarkup(
+        keyboard=[
+            [
+                KeyboardButton(text="Преподавание в начальных классах"),
+                KeyboardButton(text="Коррекционная педагогика начальном образовании"),
+            ],
+
+            [
+                KeyboardButton(text="Дошкольное образование"),
+                KeyboardButton(text="Экономика и бухгалтерский учёт (по отраслям)"),
+            ],
+
+            [
+                KeyboardButton(text="Право и организация социального обеспечения"),
+                KeyboardButton(text="Информационные системы и программирование"),
+            ],
+            [
+                KeyboardButton(text="Информационные системы (по отраслям)"),
+                KeyboardButton(text="Дизайн (по отраслям)"),
+            ]
+
+        ],
+        one_time_keyboard=True
+    )
+    await command.update_student_curs(msg.from_user.id, answer)
+    await msg.answer("Укажите Вашу специальность или направление подготовки", reply_markup=kb_list)
+    await register.reg_step_6.set()
+@dp.message_handler(state=register.reg_step_5)
+async def state1(msg: types.Message, state: FSMContext):
+    answer = int(msg.text)
+    kb_list = ReplyKeyboardMarkup(
+        keyboard=[
+            [
+                KeyboardButton(text="Психология и социальная педагогика"),
+                KeyboardButton(text="Психология и педагогика дошкольного образования"),
+            ],
+
+            [
+                KeyboardButton(text="Начальное образование"),
+                KeyboardButton(text="Дошкольное образование и специальная педагогика"),
+            ],
+
+            [
+                KeyboardButton(text="Юриспруденция (Общеправовой профиль)"),
+                KeyboardButton(text="Государственное и муниципальное управление"),
+            ],
+            [
+                KeyboardButton(text="Организация и управление бизнесом"),
+                KeyboardButton(text="Экономика и управление предприятием"),
+            ],
+            [
+                KeyboardButton(text="Управление государственным и муниципальным сектором"),
+                KeyboardButton(text="Дизайн (Дизайн среды)"),
+            ],
+            [
+                KeyboardButton(text="Прикладная информатика в экономике"),
+            ],
+        ],
+        one_time_keyboard=True
+    )
+    await command.update_student_curs(msg.from_user.id, answer)
+    await msg.answer("Укажите Вашу специальность или направление подготовки, если затрудняетесь, то вот список", reply_markup=kb_list)
+    await register.reg_step_6.set()
+
+@dp.message_handler(state=register.reg_step_6)
 async def state2(msg: types.Message, state: FSMContext):
     ikb_choise = InlineKeyboardMarkup(row_width=2,
                                       inline_keyboard=[
@@ -123,6 +202,16 @@ async def state2(msg: types.Message, state: FSMContext):
                                       ])
     answer = msg.text
     await command.update_student_speciality(msg.from_user.id, answer)
+    student = await command.select_student(msg.from_user.id)
+    await msg.answer(f"Готово!\n"
+                     f"Пожалуйста перепроверьте свои ответы, и если всё верно: нажмите кнопку подтвердить\n"
+                     f"-----------------------\n"
+                     f"У Вас {student.education} {student.form}\n"
+                     f"Вы на {student.curs} курсе\n"
+                     f"И Вы обучаетесь по направлению подготовки {student.speciality}\n"
+                     f"-----------------------\n"
+                     f"Всё верно?", reply_markup=types.ReplyKeyboardRemove())
     await msg.answer(f"Спасибо за уделенное время, регистрация завершена\n", reply_markup=ikb_choise)
-    await register.reg_step_4.set()
+
+    await register.reg_step_6.set()
     await state.finish()
