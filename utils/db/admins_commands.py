@@ -35,7 +35,7 @@ async def delete_admin_self(user_id):
 async def invite_admin(user_id):
     try:
         user = await select_user(int(user_id))
-        await add_admin(user.user_id, user.username, user.first_name, user.last_name, status="Модератор")
+        await add_admin(user.user_id, user.first_name, user.last_name, user.username, status="Модератор")
     except Exception:
         print("Пригласить админа не удалось")
 

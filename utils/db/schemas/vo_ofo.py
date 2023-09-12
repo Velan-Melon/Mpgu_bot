@@ -8,23 +8,13 @@ class Vo_ofo(TimedBaseModel):
 
     name = Column(String(200), primary_key=True)
 
-    budget_places_on_11 = Column(String(100))
-    form_of_education_on_11 = Column(String(50), default="Очная")
-    period_of_study_on_11 = Column(String(100))
-    price_on_11 = Column(String(50))
-    examination_on_11 = Column(String(200))
-
-    budget_places_on_spo = Column(String(100))
-    form_of_education_on_spo = Column(String(50), default="Очная")
-    period_of_study_on_spo = Column(String(100))
-    price_on_spo = Column(String(50))
-    examination_on_spo = Column(String(200))
-
-    budget_places_on_vo = Column(String(100))
-    form_of_education_on_vo = Column(String(50), default="Очная")
-    period_of_study_on_vo = Column(String(100))
-    price_on_vo = Column(String(50))
-    examination_on_vo = Column(String(200))
+    budget_places = Column(String(100))
+    form_of_education = Column(String(50), default="Очная")
+    period_of_study = Column(String(100))
+    price = Column(String(50))
+    examination = Column(String(200))
+    entrance_test = Column(String(200))
+    comment = Column(String(1000))
 
 
     query: sql.select

@@ -21,12 +21,13 @@ async def add_admin(msg: types.Message, state: FSMContext):
     answer = msg.text[1:]
     try:
         name = await quick_commands.select_username(answer)
-        print(f"id пользователя, которого добавляют в телеграмм: {name.user_id}")
+        print(f"id пользователя, которого добавляют в администрцию: {name.user_id}")
         await admins_commands.invite_admin(name.user_id)
         await dp.bot.send_message(chat_id=name.user_id, text="Поздравляю, Вас назначили администратором, воспользуйтесь командой /help_admin чтобы узнать свои возможности")
         print(f"пользователь {answer} теперь является администратором")
         await msg.answer(f"пользователь {answer} теперь является администратором")
         await state_admin.admin.adm_step_1.set()
-        await state.finish()
+
     except:
         await msg.answer("По каким-то причинам добавить админа не получилось, проверьте id")
+    await state.finish()

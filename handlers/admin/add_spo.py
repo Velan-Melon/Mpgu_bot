@@ -31,29 +31,8 @@ async def add_spo(msg: types.Message, state: FSMContext):
 
 @dp.message_handler(IsAdmin(), text='/update_spo')
 async def update_spo(msg: types.Message):
-    kb_spo = ReplyKeyboardMarkup(
-        keyboard=[
-            [
-                KeyboardButton(text="9"),
-                KeyboardButton(text="11"),
-            ]
-        ],
-        resize_keyboard=True,
-        one_time_keyboard=True
-    )
-    await msg.answer("Вы хотите исправить список СПО после 9 или 11?", reply_markup=kb_spo)
-    await spo9.spo9_step_start.set()
-
-@dp.message_handler(state=spo9.spo9_step_start)
-async def add_spo(msg: types.Message, state: FSMContext):
-    if msg.text == "9":
-        await msg.answer("Напишите название дисциплины")
-        await spo9.spo9_step_1.set()
-    if msg.text == "11":
-        await msg.answer("Напишите название дисциплины")
-        await spo11.spo11_step_1.set()
-    else:
-        await msg.answer("Вы должны выбрать между 9 и 11")
+    await msg.answer("Напишите название дисциплины")
+    spo11.spo11_step_1.set()
 
 @dp.message_handler(state=spo9.spo9_step_1)
 async def state1(msg: types.Message, state: FSMContext):
@@ -98,47 +77,6 @@ async def state2(msg: types.Message, state: FSMContext):
     await state.finish()
 
 
-@dp.message_handler(state=spo11.spo11_step_1)
-async def state1(msg: types.Message, state: FSMContext):
-    answer1 = msg.text
-    data.append(answer1)
-    await msg.answer("Напишите есть ли бюджетные места")
-    await spo11.spo11_step_2.set()
 
-@dp.message_handler(state=spo11.spo11_step_2)
-async def state1(msg: types.Message, state: FSMContext):
-    answer2 = msg.text
-    data.append(answer2)
-    await msg.answer("Какие присутсвуют формы обучения?")
-    await spo11.spo11_step_3.set()
-
-@dp.message_handler(state=spo11.spo11_step_3)
-async def state1(msg: types.Message, state: FSMContext):
-    answer3 = msg.text
-    data.append(answer3)
-
-    await msg.answer("Укажите срок обучения")
-
-    await spo11.spo11_step_4.set()
-
-@dp.message_handler(state=spo11.spo11_step_4)
-async def state2(msg: types.Message, state: FSMContext):
-    answer4 = msg.text
-    data.append(answer4)
-
-    await msg.answer(f"Укажите цену за год в рублях")
-    await spo11.spo11_step_5.set()
-
-
-@dp.message_handler(state=spo11.spo11_step_5)
-async def state2(msg: types.Message, state: FSMContext):
-    answer5 = msg.text
-    data.append(answer5)
-    await command.update_edu_prog_spo11(data[0], data[1], data[2], data[3], answer5)
-    print(data)
-    data.clear()
-    await msg.answer(f"готово")
-    await spo11.spo11_step_5.set()
-    await state.finish()
 
 

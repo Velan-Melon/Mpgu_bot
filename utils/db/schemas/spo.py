@@ -8,15 +8,10 @@ class Spo(TimedBaseModel):
 
     name = Column(String(200), primary_key=True)
 
-    budget_places_9 = Column(String(100))
-    form_of_education_9 = Column(String(50))
-    period_of_study_9 = Column(String(100))
-    price_9 = Column(String(50))
-
-    budget_places_11 = Column(String(100))
-    form_of_education_11 = Column(String(50))
-    period_of_study_11 = Column(String(100))
-    price_11 = Column(String(50))
+    budget_places = Column(String(100))
+    form_of_education = Column(String(50))
+    period_of_study = Column(String(100))
+    price = Column(String(50))
 
 
     query: sql.select

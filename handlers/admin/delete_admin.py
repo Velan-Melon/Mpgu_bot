@@ -27,17 +27,21 @@ async def delete_admin_func(msg: types.Message, state: FSMContext):
         print(f"пользователь {answer} больше не является администратором")
         await msg.answer(f"пользователь {answer} больше не является администратором")
         await state_admin.admin.adm_step_2.set()
-        await state.finish()
     except Exception:
         await msg.answer("По каким-то причинам удалить администратора не получилось, проверьте username")
         print(Exception)
+    await state.finish()
 
 @dp.message_handler(IsAdmin(), text= "/delete_self")
 async def delete_admin_self(msg: types.Message):
-    try:
-        await admins_commands.delete_admin_self(msg.from_user.id)
-        await msg.answer("Вы больше не администратор")
-        print(f"Пользователь {msg.from_user.id}, {msg.from_user.username}, {msg.from_user.first_name} юольше не является администратором")
-    except Exception:
-        print(Exception)
-        await msg.answer("Произошла ошибка")
+    all_adm = await admins_commands.select_all_admins()
+    if len(all_adm) > 2:
+        try:
+            await admins_commands.delete_admin_self(msg.from_user.id)
+            await msg.answer("Вы больше не администратор")
+            print(f"Пользователь {msg.from_user.id}, {msg.from_user.username}, {msg.from_user.first_name} больше не является администратором")
+        except Exception:
+            print(Exception)
+            await msg.answer("Произошла ошибка")
+    else:
+        await msg.answer("")

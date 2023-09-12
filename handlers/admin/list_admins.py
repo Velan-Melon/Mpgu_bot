@@ -1,10 +1,8 @@
 from filters import IsAdmin
 from loader import dp
-from aiogram.dispatcher import FSMContext
 from aiogram import types
-from states import state_admin
 from utils.db import admins_commands as commands
-from utils.db import quick_commands
+
 
 
 @dp.message_handler(IsAdmin(), text='/list_admin')
