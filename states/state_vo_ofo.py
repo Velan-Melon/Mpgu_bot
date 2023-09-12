@@ -9,6 +9,9 @@ class vo11_ofo(StatesGroup):
     vo11_ofo_step_4 = State()
     vo11_ofo_step_5 = State()
     vo11_ofo_step_6 = State()
+    vo11_ofo_step_7 = State()
+    vo11_ofo_step_finish = State()
+
 
 class vo_spo_ofo(StatesGroup):
     vo_spo_ofo_step_0 = State()
@@ -18,6 +21,9 @@ class vo_spo_ofo(StatesGroup):
     vo_spo_ofo_step_4 = State()
     vo_spo_ofo_step_5 = State()
     vo_spo_ofo_step_6 = State()
+    vo_spo_ofo_step_7 = State()
+    vo_spo_ofo_step_finish = State()
+
 
 class vo_vo_ofo(StatesGroup):
     vo_vo_ofo_step_0 = State()
@@ -27,4 +33,5 @@ class vo_vo_ofo(StatesGroup):
     vo_vo_ofo_step_4 = State()
     vo_vo_ofo_step_5 = State()
     vo_vo_ofo_step_6 = State()
-
+    vo_vo_ofo_step_7 = State()
+    vo_vo_ofo_step_finish = State()

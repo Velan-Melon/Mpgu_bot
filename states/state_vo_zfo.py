@@ -9,6 +9,8 @@ class vo11_zfo(StatesGroup):
     vo11_zfo_step_4 = State()
     vo11_zfo_step_5 = State()
     vo11_zfo_step_6 = State()
+    vo11_zfo_step_7 = State()
+    vo11_zfo_step_finish = State()
 
 class vo_spo_zfo(StatesGroup):
     vo_spo_zfo_step_0 = State()
@@ -18,6 +20,8 @@ class vo_spo_zfo(StatesGroup):
     vo_spo_zfo_step_4 = State()
     vo_spo_zfo_step_5 = State()
     vo_spo_zfo_step_6 = State()
+    vo_spo_zfo_step_7 = State()
+    vo_spo_zfo_step_finish = State()
 
 class vo_vo_zfo(StatesGroup):
     vo_vo_zfo_step_0 = State()
@@ -27,4 +31,6 @@ class vo_vo_zfo(StatesGroup):
     vo_vo_zfo_step_4 = State()
     vo_vo_zfo_step_5 = State()
     vo_vo_zfo_step_6 = State()
+    vo_vo_zfo_step_7 = State()
+    vo_vo_zfo_step_finish = State()
 

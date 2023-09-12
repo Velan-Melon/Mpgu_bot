@@ -27,7 +27,17 @@ async def add_vo_zfo(name: str):
     except UniqueViolationError:
         print("направление не добавлено")
 
+async def select_all_spo():
+    spo = await Spo.query.order_by(Spo.name.desc()).gino.all()
+    return spo
 
+async def select_all_vo_ofo():
+    vo_ofo = await Vo_ofo.query.order_by(Vo_ofo.name.desc()).gino.all()
+    return vo_ofo
+
+async def select_all_vo_zfo():
+    vo_zfo = await Vo_zfo.query.order_by(Vo_zfo.name.desc()).gino.all()
+    return vo_zfo
 async def select_edu_prog_spo(name):
     prog = await Spo.query.where(Spo.name == name).gino.first()
     return prog
@@ -48,27 +58,27 @@ async def select_edu_prog_vo_zfo(name):
     prog = await Vo_zfo.query.where(Vo_zfo.name == name).gino.first()
     return prog
 
-async def update_edu_prog_vo11_ofo(name, budget_places_vo11, form_of_education_vo11, period_of_study_vo11, price_vo11, examination_on_11):
+async def update_edu_prog_vo11_ofo(name, budget_places_on_11, period_of_study_on_11, price_on_11, examination_on_11):
     prog = await select_edu_prog_vo_ofo(name)
-    await prog.update(budget_places_vo11=budget_places_vo11, form_of_education_vo11=form_of_education_vo11, period_of_study_vo11=period_of_study_vo11,  price_vo11=price_vo11, examination_on_11=examination_on_11).apply()
+    await prog.update(budget_places_on_11=budget_places_on_11, period_of_study_on_11=period_of_study_on_11,  price_on_11=price_on_11, examination_on_11=examination_on_11).apply()
 
-async def update_edu_prog_vo_on_spo_ofo(name, budget_places_vo_on_spo, form_of_education_vo_on_spo, period_of_study_vo_on_spo, price_vo_on_spo, examination_on_spo):
+async def update_edu_prog_vo_on_spo_ofo(name, budget_places_vo_on_spo, period_of_study_vo_on_spo, price_vo_on_spo, examination_on_spo):
     prog = await select_edu_prog_vo_ofo(name)
-    await prog.update(budget_places_vo_on_spo=budget_places_vo_on_spo, form_of_education_vo_on_spo=form_of_education_vo_on_spo, period_of_study_vo_on_spo=period_of_study_vo_on_spo,  price_vo_on_spo=price_vo_on_spo, examinationon_spo=examination_on_spo).apply()
+    await prog.update(budget_places_on_spo=budget_places_vo_on_spo, period_of_study_on_spo=period_of_study_vo_on_spo, price_on_spo=price_vo_on_spo, examination_on_spo=examination_on_spo).apply()
 
-async def update_edu_prog_vo_on_vo_ofo(name, budget_places_vo_on_vo, form_of_education_vo_on_vo, period_of_study_vo_on_vo, price_vo_on_vo, examination_on_vo):
+async def update_edu_prog_vo_on_vo_ofo(name, budget_places_vo_on_vo, period_of_study_on_vo, price_vo_on_vo, examination_on_vo):
     prog = await select_edu_prog_vo_ofo(name)
-    await prog.update(budget_places_vo_on_vo=budget_places_vo_on_vo, form_of_education_vo_on_vo=form_of_education_vo_on_vo, period_of_study_vo_on_vo=period_of_study_vo_on_vo,  price_vo_on_vo=price_vo_on_vo, examination_on_vo=examination_on_vo).apply()
+    await prog.update(budget_places_on_vo=budget_places_vo_on_vo, period_of_study_on_vo=period_of_study_on_vo, price_on_vo=price_vo_on_vo, examination_on_vo=examination_on_vo).apply()
 
-async def update_edu_prog_vo11_zfo(name, budget_places_vo11, form_of_education_vo11, period_of_study_vo11, price_vo11, examination_on_11):
+async def update_edu_prog_vo11_zfo(name, budget_places_vo11, period_of_study_vo11, price_vo11, examination_on_11):
     prog = await select_edu_prog_vo_zfo(name)
-    await prog.update(budget_places_vo11=budget_places_vo11, form_of_education_vo11=form_of_education_vo11, period_of_study_vo11=period_of_study_vo11,  price_vo11=price_vo11, examination_on_11=examination_on_11).apply()
+    await prog.update(budget_places_on_11=budget_places_vo11, period_of_study_on_11=period_of_study_vo11,  price_on_11=price_vo11, examination_on_11=examination_on_11).apply()
 
-async def update_edu_prog_vo_on_spo_zfo(name, budget_places_vo_on_spo, form_of_education_vo_on_spo, period_of_study_vo_on_spo, price_vo_on_spo, examination_on_spo):
+async def update_edu_prog_vo_on_spo_zfo(name, budget_places_vo_on_spo, period_of_study_vo_on_spo, price_vo_on_spo, examination_on_spo):
     prog = await select_edu_prog_vo_zfo(name)
-    await prog.update(budget_places_vo_on_spo=budget_places_vo_on_spo, form_of_education_vo_on_spo=form_of_education_vo_on_spo, period_of_study_vo_on_spo=period_of_study_vo_on_spo,  price_vo_on_spo=price_vo_on_spo, examinationon_spo=examination_on_spo).apply()
+    await prog.update(budget_places_on_spo=budget_places_vo_on_spo, period_of_study_on_spo=period_of_study_vo_on_spo, price_on_spo=price_vo_on_spo, examination_on_spo=examination_on_spo).apply()
 
-async def update_edu_prog_vo_on_vo_zfo(name, budget_places_vo_on_vo, form_of_education_vo_on_vo, period_of_study_vo_on_vo, price_vo_on_vo, examination_on_vo):
+async def update_edu_prog_vo_on_vo_zfo(name, budget_places_vo_on_vo, period_of_study_vo_on_vo, price_vo_on_vo, examination_on_vo):
     prog = await select_edu_prog_vo_zfo(name)
-    await prog.update(budget_places_vo_on_vo=budget_places_vo_on_vo, form_of_education_vo_on_vo=form_of_education_vo_on_vo, period_of_study_vo_on_vo=period_of_study_vo_on_vo,  price_vo_on_vo=price_vo_on_vo, examination_on_vo=examination_on_vo).apply()
+    await prog.update(budget_places_on_vo=budget_places_vo_on_vo, period_of_study_on_vo=period_of_study_vo_on_vo,  price_on_vo=price_vo_on_vo, examination_on_vo=examination_on_vo).apply()
 
